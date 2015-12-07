@@ -1,5 +1,5 @@
-pyramid_beaker
-==============
+pyramid_beaker_elasticache
+==========================
 
 Provides a session factory for the `Pyramid <http://docs.pylonsproject.org>`_
 web framework backed by the `Beaker <http://beaker.groovie.org/>`_ sessioning

@@ -11,6 +11,8 @@ from zope.interface import implementer
 
 from binascii import hexlify
 
+from .cluster_utils import get_cluster_info
+
 
 def BeakerSessionFactoryConfig(**options):
     """ Return a Pyramid session factory using Beaker session settings
@@ -127,8 +129,19 @@ def session_factory_from_settings(settings):
                     v = asbool(v)
                 options[option_name] = v
 
+    # transpose an elasticache config url into actual node urls
+    if 'type' in options and options['type'] == 'ext:elasticache-memcached':
+        options['type'] = 'ext:memcached'
+        if 'url' in options:
+            uarr = options['url'].split(':')
+            host = uarr[0]
+            port = len(uarr) == 2 and int(uarr[1]) or 11211
+            info = get_cluster_info(host, port)
+            options['url'] = ';'.join(info['nodes'])
+
     options = coerce_session_params(options)
     return BeakerSessionFactoryConfig(**options)
+
 
 def set_cache_regions_from_settings(settings):
     """ Add cache support to the Pylons application.
@@ -138,7 +151,7 @@ def set_cache_regions_from_settings(settings):
     with either 'beaker.cache.' or 'cache.'.
 
     """
-    cache_settings = {'regions':None}
+    cache_settings = {'regions': None}
     for key in settings.keys():
         for prefix in ['beaker.cache.', 'cache.']:
             if key.startswith(prefix):
@@ -152,7 +165,8 @@ def set_cache_regions_from_settings(settings):
     regions = cache_settings['regions']
     if regions:
         for region in regions:
-            if not region: continue
+            if not region:
+                continue
             region_settings = {
                 'data_dir': cache_settings.get('data_dir'),
                 'lock_dir': cache_settings.get('lock_dir'),
@@ -169,6 +183,7 @@ def set_cache_regions_from_settings(settings):
                     region_settings[key[region_len:]] = cache_settings.pop(key)
             coerce_cache_params(region_settings)
             cache.cache_regions[region] = region_settings
+
 
 def includeme(config):
     session_factory = session_factory_from_settings(config.registry.settings)
