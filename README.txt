@@ -1,6 +1,12 @@
 pyramid_beaker_elasticache
 ==========================
 
+Fork of pyramid_beaker that uses ElastiCache auto-discovery.
+
+
+pyramid_beaker
+==============
+
 Provides a session factory for the `Pyramid <http://docs.pylonsproject.org>`_
 web framework backed by the `Beaker <http://beaker.groovie.org/>`_ sessioning
 system.
