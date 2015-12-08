@@ -30,43 +30,42 @@ requires = ['pyramid', 'beaker']
 docs_extras = [
     'Sphinx',
     'docutils',
-    ]
+]
 
 testing_extras = [
     'nose',
     'coverage',
-    ]
+]
 
-setup(name='pyramid_beaker',
+setup(name='pyramid_beaker_elasticache',
       version='0.8',
-      description='Beaker session factory backend for Pyramid',
-      long_description=README + '\n\n' +  CHANGES,
+      description='ElastiCache auto-discovery enabled Beaker session factory backend for Pyramid',
+      long_description=README + '\n\n' + CHANGES,
       classifiers=[
-        "Intended Audience :: Developers",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
-        "Framework :: Pyramid",
-        ],
+          "Intended Audience :: Developers",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 2",
+          "Programming Language :: Python :: 2.6",
+          "Programming Language :: Python :: 2.7",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.2",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Framework :: Pyramid",
+      ],
       keywords='web wsgi pylons pyramid',
-      author="Chris McDonough, Agendaless Consulting",
+      author="Chip Kellam",
       author_email="pylons-devel@googlegroups.com",
-      url="http://docs.pylonsproject.org/projects/pyramid_beaker/en/latest/",
+      url="https://github.com/chipkellam/pyramid_beaker_elasticache",
       license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      tests_require = requires,
-      install_requires = requires,
-      extras_require = {
-          'testing':testing_extras,
-          'docs':docs_extras,
-          },
-      test_suite="pyramid_beaker",
+      tests_require=requires,
+      install_requires=requires,
+      extras_require={
+          'testing': testing_extras,
+          'docs': docs_extras,
+      },
+      test_suite="pyramid_beaker_elasticache",
       )
-
